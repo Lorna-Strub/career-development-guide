@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Development Resource Guide</title>
+    <style>
+        /* Brand Font: Bahnschrift Light (Oshkosh Defense standard)
+           Bahnschrift is included with Windows 10+
+           Falls back to Segoe UI, then system fonts
+        */
+
+        :root {
+            color-scheme: light;
+            --primary: #46ABB1;
+            --primary-dark: #1A7189;
+            --secondary: #7B9047;
+            --accent: #CA9300;
+            --background: #ffffff;
+            --surface: #F5F5F5;
+            --border: #D0D3D3;
+            --text: #1F2020;
+            --text-muted: #464644;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bahnschrift Light', 'Bahnschrift', 'Segoe UI Light', 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        button, .button {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover, .button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(70, 171, 177, 0.3);
+        }
+
+        button.secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        button.secondary:hover {
+            background: var(--border);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 30px;
+        }
+
+        .quiz-question label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: #F0F9FA;
+        }
+
+        .quiz-option input[type="radio"],
+        .quiz-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: #F0F9FA;
+        }
+
+        .resource-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+
+        .resource-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .resource-card h3 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .resource-card p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .needs-link-badge {
+            display: inline-block;
+            background: #FFF3CD;
+            color: #8A6D00;
+            border: 1px solid #E6C200;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .resource-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            background: #E0F2F3;
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .resource-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .filter-btn {
+            background: white;
+            color: var(--text);
+            border: 2px solid var(--border);
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .results-summary {
+            background: linear-gradient(135deg, #E0F2F3 0%, #C8E9EB 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .results-summary h3 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .welcome-content {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-content h2 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .welcome-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(70, 171, 177, 0.2);
+            border-color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-family: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .progress-indicator {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Career Development Resource Guide</h1>
+        <p>Find the right resources to support your career growth</p>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div id="welcome" class="section active">
+            <div class="welcome-content">
+                <h2>Welcome to Your Career Development Journey</h2>
+                <p>This interactive guide will help you discover resources tailored to your career goals and development needs.</p>
+                <p>Take a quick quiz to get personalized recommendations, browse our complete resource library, or start with a free course on career conversations.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="showSection('quiz')">
+                        <h3>📋 Quick Quiz</h3>
+                        <p>Answer a few questions to get personalized resource recommendations</p>
+                    </div>
+                    <div class="feature-card" onclick="showSection('library')">
+                        <h3>📚 Full Library</h3>
+                        <p>Browse all resources organized by category</p>
+                    </div>
+                    <div class="feature-card" onclick="window.open('https://hr.wisc.edu/training/ltd/its-your-career-having-a-productive-career-development-conversation-with-your-supervisor-4-20-2026/', '_blank')">
+                        <h3>🎓 Free UW Course</h3>
+                        <p>Learn how to have productive career development conversations with your supervisor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz" class="section">
+            <div class="card">
+                <h2>Career Development Quiz</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Answer these questions to help us recommend the best resources for you.</p>
+
+                <div class="progress-indicator">
+                    <span id="progress-text">Question 1 of 5</span>
+                </div>
+
+                <form id="quiz-form">
+                    <!-- Question 1: Current Role -->
+                    <div class="quiz-question">
+                        <label>1. What best describes your current role?</label>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="role" value="individual" required>
+                                <strong>Individual Contributor</strong> - Focused on technical or specialized work
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="role" value="team-lead">
+                                <strong>Team Lead/Supervisor</strong> - Managing a small team or projects
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="role" value="manager">
+                                <strong>Manager</strong> - Leading teams and strategic initiatives
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="role" value="senior-leader">
+                                <strong>Senior Leader</strong> - Director level or above
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: Career Aspiration -->
+                    <div class="quiz-question">
+                        <label>2. Where do you see your career heading?</label>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="aspiration" value="technical-expert" required>
+                                <strong>Technical/Subject Matter Expert</strong> - Deepen expertise in my field
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="aspiration" value="leadership">
+                                <strong>People Leadership</strong> - Lead and develop teams
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="aspiration" value="strategic">
+                                <strong>Strategic Leadership</strong> - Shape organizational direction
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="aspiration" value="lateral">
+                                <strong>Lateral Move</strong> - Explore different function or area
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Timeline -->
+                    <div class="quiz-question">
+                        <label>3. What's your development timeline?</label>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="timeline" value="immediate" required>
+                                <strong>Immediate</strong> - Need skills for current role or upcoming opportunity
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="timeline" value="near-term">
+                                <strong>Near-term (6-12 months)</strong> - Preparing for next career step
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="timeline" value="long-term">
+                                <strong>Long-term (1-3 years)</strong> - Building foundation for future growth
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 4: Skill Development Areas -->
+                    <div class="quiz-question">
+                        <label>4. Which skill areas do you want to develop? (Select all that apply)</label>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="checkbox" name="skills" value="technical">
+                                <strong>Technical Skills</strong> - Job-specific technical capabilities
+                            </label>
+                            <label class="quiz-option">
+                                <input type="checkbox" name="skills" value="leadership">
+                                <strong>Leadership & Management</strong> - Leading people and projects
+                            </label>
+                            <label class="quiz-option">
+                                <input type="checkbox" name="skills" value="communication">
+                                <strong>Communication & Collaboration</strong> - Working effectively with others
+                            </label>
+                            <label class="quiz-option">
+                                <input type="checkbox" name="skills" value="strategic">
+                                <strong>Strategic Thinking</strong> - Big picture planning and problem solving
+                            </label>
+                            <label class="quiz-option">
+                                <input type="checkbox" name="skills" value="core-values">
+                                <strong>Organizational Values & Culture</strong> - Aligning with company principles
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5: Learning Preference -->
+                    <div class="quiz-question">
+                        <label>5. How do you prefer to learn?</label>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="learning" value="self-paced" required>
+                                <strong>Self-paced online</strong> - Learn on my own schedule
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="learning" value="structured">
+                                <strong>Structured courses</strong> - Formal training programs
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="learning" value="social">
+                                <strong>Social/collaborative</strong> - Learn with and from others
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="learning" value="mixed">
+                                <strong>Mixed approach</strong> - Variety of learning methods
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="submit">Get My Recommendations</button>
+                        <button type="button" class="secondary" onclick="showSection('welcome')">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="section">
+            <div class="card">
+                <h2>Your Personalized Recommendations</h2>
+
+                <div class="results-summary" id="results-summary">
+                    <!-- Dynamic summary will be inserted here -->
+                </div>
+
+                <div id="recommended-resources">
+                    <!-- Recommended resources will be inserted here -->
+                </div>
+
+                <div class="nav-buttons">
+                    <button onclick="showSection('library')">View All Resources</button>
+                    <button class="secondary" onclick="showSection('quiz')">Retake Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Section -->
+        <div id="library" class="section">
+            <div class="card">
+                <h2>Resource Library</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Browse all career development resources by category</p>
+
+                <input type="text" id="search" class="search-box" placeholder="Search resources...">
+
+                <div class="filter-buttons" id="filter-buttons">
+                    <button class="filter-btn active" data-category="all">All Resources</button>
+                    <button class="filter-btn" data-category="workday">Workday Resources</button>
+                    <button class="filter-btn" data-category="linkedin">LinkedIn & Online Learning</button>
+                    <button class="filter-btn" data-category="assessments">Assessments</button>
+                    <button class="filter-btn" data-category="values">Core Values</button>
+                    <button class="filter-btn" data-category="leadership">Leadership</button>
+                    <button class="filter-btn" data-category="technical">Technical Skills</button>
+                    <button class="filter-btn" data-category="planning">Career Planning</button>
+                </div>
+
+                <div id="resource-list">
+                    <!-- Resources will be inserted here -->
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="secondary" onclick="showSection('welcome')">Back to Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Skills Detail Page -->
+        <div id="technical-skills-page" class="section">
+            <div class="card">
+                <h2>Technical Skills</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Technical skills vary widely by role, department, and function across Oshkosh. The list below is <strong>not all-encompassing</strong> &mdash; it's a starting point to help you identify and search for the specific technical skills relevant to your job and career goals.</p>
+
+                <div class="card" style="background: white; margin-bottom: 20px;">
+                    <h3 style="color: var(--text); margin-bottom: 10px;">Finding Technical Skills on LinkedIn Learning</h3>
+                    <p style="margin-bottom: 12px;">Because technical skills differ so much from role to role (engineering, manufacturing, IT, quality, supply chain, finance, and more), the best way to find content specific to <em>your</em> job is to search LinkedIn Learning directly:</p>
+                    <ul style="margin: 0 0 12px 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 6px;">Log in to LinkedIn Learning through Workday</li>
+                        <li style="margin-bottom: 6px;">Use the search bar to enter your specific skill, tool, or software (e.g., "AutoCAD," "Six Sigma," "Excel formulas," "SQL," "Lean Manufacturing")</li>
+                        <li style="margin-bottom: 6px;">Filter results by skill level (Beginner, Intermediate, Advanced) to match where you're starting from</li>
+                        <li style="margin-bottom: 6px;">Save courses to a learning collection so you can track your progress over time</li>
+                    </ul>
+                    <a href="#" class="resource-link" onclick="showSection('library'); setTimeout(() => { document.getElementById('search').value='linkedin learning'; document.getElementById('search').dispatchEvent(new Event('input')); }, 50); return false;">See LinkedIn Learning Resources →</a>
+                </div>
+
+                <div class="card" style="background: white; margin-bottom: 20px;">
+                    <h3 style="color: var(--text); margin-bottom: 10px;">Workday Learning Paths</h3>
+                    <p style="margin-bottom: 15px;">These curated learning paths in Workday group together relevant technical and professional development courses. Explore the paths below based on your role and interests:</p>
+                    <div id="workday-learning-paths">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="secondary" onclick="showSection('library')">Back to Resource Library</button>
+                    <button class="secondary" onclick="showSection('welcome')">Back to Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Resource Database
+        const resources = [
+
+            // Oshkosh Leadership Traits
+            {
+                id: 4,
+                title: "Oshkosh Leadership Traits",
+                description: "We all own the ability to influence the business by embracing the Oshkosh leadership traits, regardless of whether we lead a team or not. Use these traits for setting goals, identifying development areas, mentoring, learning, hiring, coaching, evaluating performance, and giving feedback.",
+                category: "values",
+                tags: ["Leadership Traits", "Core Values", "Culture", "Development"],
+                link: "https://oskgovus.sharepoint.us/sites/TalentCulture-cor/SitePages/Oshkosh-Leadership-Traits.aspx?csf=1&web=1&e=34h4K6",
+                keywords: ["leadership traits", "values", "culture", "development", "goals", "feedback"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic"],
+                skills: ["core-values", "leadership", "strategic"],
+                learning: ["self-paced", "structured", "mixed"]
+            },
+
+            // Leadership Development
+            {
+                id: 7,
+                title: "People-First Leadership",
+                description: "Development guide (PDF) for a 2-day, in-person program that provides front-line leaders with the essential skills and knowledge necessary to effectively lead teams, drive operational excellence and achieve our strategy by demonstrating the Leadership Traits. Intended audience: frontline leaders who have direct reports; recommended for all people leaders. Cost: $150. Look for communications about when in-person sessions are offered. Contact course contact Cristi Burrill for more information and featured schedule dates.",
+                category: "leadership",
+                tags: ["Leadership", "Frontline Leader", "In-Person", "Leadership Traits", "Development Guide"],
+                link: "./OSKMAR-LeadershipGuide-FINAL.pdf",
+                keywords: ["people first", "leadership", "frontline", "front-line", "operational excellence", "lead teams", "management", "development guide", "direct reports", "people leaders"],
+                roles: ["team-lead"],
+                aspirations: ["leadership"],
+                skills: ["leadership", "communication"],
+                learning: ["structured", "social"]
+            },
+            {
+                id: 8,
+                title: "Lead Belay's Aspiring Leader Program",
+                description: "For individual contributors without management experience, this small cohort, fully virtual program covers leading from any role, building your personal brand, professional self-advocacy, and the role of a manager to determine if management is for you!",
+                category: "leadership",
+                tags: ["Leadership", "Aspiring Leader", "Virtual", "Individual Contributor"],
+                link: "./Aspiring-Leader-Ascent-1-pager.pdf",
+                keywords: ["aspiring leader", "lead belay", "individual contributor", "personal brand", "virtual", "management", "manager"],
+                roles: ["individual"],
+                aspirations: ["leadership"],
+                skills: ["leadership", "communication"],
+                learning: ["structured", "social"]
+            },
+            {
+                id: 9,
+                title: "Lead Belay's Emerging Leader Program",
+                description: "Targeted at experienced leaders, this program focuses on building a cohesive, inclusive team, difficult & direct conversations, accountability without eroding trust, developing your team, and aligning team & org priorities.",
+                category: "leadership",
+                tags: ["Leadership", "Emerging Leader", "Team Building", "Accountability"],
+                link: "./Emerging-Leader-Ascent-1-pager.pdf",
+                keywords: ["emerging leader", "lead belay", "experienced", "team building", "accountability", "difficult conversations", "management", "managing"],
+                roles: ["team-lead", "manager"],
+                aspirations: ["leadership", "strategic"],
+                skills: ["leadership", "communication"],
+                learning: ["structured", "social", "mixed"]
+            },
+            {
+                id: 10,
+                title: "Advancing Leadership",
+                description: "A multi-month, blended program of facilitated virtual sessions, self-led practical activities, and a 2-day, in-person capstone residency designed for high potential mid-level leaders.",
+                category: "leadership",
+                tags: ["Leadership", "Mid-Level Leader", "Blended Program", "High Potential"],
+                link: "./OSKMAR-Advancing-Leadership-One-Pager-PRINT--1-.pdf",
+                keywords: ["advancing leadership", "mid-level", "high potential", "blended", "capstone", "management", "managers"],
+                roles: ["manager"],
+                aspirations: ["leadership", "strategic"],
+                skills: ["leadership", "strategic", "communication"],
+                learning: ["structured", "social", "mixed"]
+            },
+            {
+                id: 35,
+                title: "BetterUp Coaching",
+                description: "BetterUp® is an online, on-demand global coach network of over 3,000 coaches. Participants complete an online assessment and are matched with a coach based on their unique development needs. Participants receive 6 months of unlimited coaching that includes a dedicated leadership coach, as well as access to specialist coaches for work and life skills.",
+                category: "leadership",
+                tags: ["Coaching", "BetterUp", "Development", "Virtual"],
+                link: "#",
+                keywords: ["betterup", "coaching", "virtual", "assessment", "development"],
+                roles: ["team-lead", "manager", "senior-leader"],
+                aspirations: ["leadership", "strategic", "technical-expert"],
+                skills: ["leadership", "communication", "strategic"],
+                learning: ["social", "self-paced", "mixed"]
+            },
+            {
+                id: 39,
+                title: "Help Them Grow - Leader Lab",
+                description: "Leader Lab resource for developing and coaching your team members. Practical tools and frameworks for supporting team member growth and career development.",
+                category: "leadership",
+                tags: ["Leadership", "Coaching", "Development", "Leader Lab"],
+                link: "./Help-Them-Grow-Leader-Lab (1).pdf",
+                keywords: ["help them grow", "leader lab", "coaching", "development", "team"],
+                roles: ["team-lead", "manager", "senior-leader"],
+                aspirations: ["leadership"],
+                skills: ["leadership", "communication"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 40,
+                title: "Help Them Grow - Toolkit",
+                description: "Comprehensive toolkit for leaders to support team member development. Includes practical resources, templates, and strategies for coaching and career development conversations.",
+                category: "leadership",
+                tags: ["Leadership", "Toolkit", "Development", "Coaching"],
+                link: "./Help-Them-Grow-Toolkit.pdf",
+                keywords: ["help them grow", "toolkit", "coaching", "development", "resources"],
+                roles: ["team-lead", "manager", "senior-leader"],
+                aspirations: ["leadership"],
+                skills: ["leadership", "communication"],
+                learning: ["self-paced", "mixed"]
+            },
+
+            // Technical Skills
+            {
+                id: 11,
+                title: "Technical Skills",
+                description: "Technical skills vary by role and function - explore how to find the specific technical skills relevant to you through LinkedIn Learning and Workday learning paths.",
+                category: "technical",
+                tags: ["Technical Skills", "LinkedIn Learning", "Workday Learning Paths"],
+                link: "#technical-skills-page",
+                keywords: ["technical", "assessment", "evaluation", "skills", "workday learning paths", "linkedin learning"],
+                roles: ["individual", "team-lead"],
+                aspirations: ["technical-expert"],
+                skills: ["technical"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 12,
+                title: "Educational Assistance Program",
+                description: "Oshkosh provides up to $10,000 per year in tuition reimbursement for team members pursuing GED, trade/apprentice programs, or degrees related to your current role or career advancement. Reimbursement based on grades: 100% for A/B, 75% for C. Includes textbooks/materials up to $100 per course. Submit requests through MyOshkosh within 6 months of course completion.",
+                category: "planning",
+                tags: ["Career Planning", "Education", "Tuition Reimbursement", "MyOshkosh"],
+                link: "./Educational Assistance .pdf",
+                keywords: ["educational assistance", "tuition", "education", "degree", "certification", "reimbursement", "myoshkosh", "GED", "trade school", "apprentice"],
+                roles: ["individual", "team-lead", "manager"],
+                aspirations: ["technical-expert", "leadership", "lateral"],
+                skills: ["technical", "leadership", "strategic"],
+                learning: ["structured", "self-paced", "mixed"]
+            },
+            {
+                id: 13,
+                title: "Career Growth Resources for Team Members",
+                description: "Access Workday career growth resources including the My Growth Plan Journal. Use this journal to capture self-reflection, record feedback, and track your progress. Based on the 70/20/10 learning principle: 70% experience on the job, 20% exposure to others, 10% education. Download the journal and explore career development tools in Workday.",
+                category: "planning",
+                tags: ["Career Planning", "My Growth Plan", "Development", "Workday"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/d/inst/1$25754/25754$144.htmld",
+                keywords: ["my growth plan", "career growth", "development", "journal", "70-20-10", "self-reflection", "workday"],
+                roles: ["individual", "team-lead", "manager"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic", "core-values"],
+                learning: ["self-paced", "social", "mixed"]
+            },
+            {
+                id: 42,
+                title: "It's Your Career: Having a Productive Career Development Conversation with Your Supervisor",
+                description: "Free University of Wisconsin-Madison course. Research shows that employees who participate in regular career development conversations feel more engaged, motivated, and supported in their growth. Learn how to reflect on what matters most to you, create a career development plan, and approach meaningful conversations that can positively shape your career path.",
+                category: "planning",
+                tags: ["Career Planning", "Free Course", "Career Conversations", "Supervisor Discussions"],
+                link: "https://hr.wisc.edu/training/ltd/its-your-career-having-a-productive-career-development-conversation-with-your-supervisor-4-20-2026/",
+                keywords: ["career conversation", "supervisor", "career development", "free course", "university of wisconsin", "UW madison", "engagement", "career planning", "goals"],
+                roles: ["individual", "team-lead", "manager"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["communication", "core-values", "strategic"],
+                learning: ["self-paced", "structured"]
+            },
+
+            // Career Planning & Tools
+            {
+                id: 19,
+                title: "Individual Development Plan (IDP) Template",
+                description: "Download the My Growth Plan Journal to create a structured plan for your career development goals and action steps. Use it to capture self-reflection activities, record feedback from leaders, and track your progress. Includes three components: My Discovery (self-reflection), My Learning (development needs), and My Development (action plans). Based on the 70/20/10 learning principle.",
+                category: "planning",
+                tags: ["Career Planning", "IDP", "Goal Setting", "My Growth Plan"],
+                link: "./My_Growth_Plan_Journal_English (1)-e14d2faa.pdf",
+                keywords: ["IDP", "development plan", "goals", "planning", "my growth plan", "journal", "self-reflection", "70-20-10"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic", "core-values"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 23,
+                title: "Internal Job Search Strategies",
+                description: "\"Navigating Your Next Move at Oshkosh\" - a guide demystifying the internal hiring process. Covers understanding the process from the moment you consider an internal opportunity through the final decision, how to put your best foot forward (making your experience visible and telling your story), and what to expect after you apply or interview.",
+                category: "planning",
+                tags: ["Career Planning", "Internal Mobility", "Job Search"],
+                link: "./2026_Navigating-Your-Career.pdf",
+                keywords: ["internal jobs", "opportunities", "mobility", "application", "navigating your next move", "internal hiring process"],
+                roles: ["individual", "team-lead", "manager"],
+                aspirations: ["lateral", "leadership", "strategic"],
+                skills: ["strategic"],
+                learning: ["self-paced", "mixed"]
+            },
+            // Workday Resources
+            {
+                id: 25,
+                title: "Workday Career Hub",
+                description: "Career Hub is an application within Workday that uses machine learning to suggest skills, mentors, connections, gigs, and roles based on your career profile and skill interests. Update your Career Profile to get accurate recommendations - think of it as your internal LinkedIn!",
+                category: "workday",
+                tags: ["Workday", "Career Hub", "Career Planning", "Skills"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/d/task/1422$2224.htmld",
+                keywords: ["workday", "career hub", "profile", "skills", "opportunities", "machine learning"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic", "core-values"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 26,
+                title: "How to Build Your Career Profile in Workday",
+                description: "Watch this video tutorial to learn how to update your Career Profile in Workday. Your career profile helps Career Hub accurately suggest opportunities tailored to your skills and interests.",
+                category: "workday",
+                tags: ["Workday", "Career Profile", "Video Tutorial", "Career Planning"],
+                link: "./How-to-Build-Your-Career-Profile-in-Workday-25mb.mp4",
+                keywords: ["workday", "career profile", "video", "tutorial", "how to"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 27,
+                title: "Mentorship at Oshkosh",
+                description: "Mentorship at Oshkosh consists of team members (mentees) pairing with experienced co-workers (mentors) to upskill, broaden perspectives, network and/or advance in leadership. By participating in mentorship you are helping to shape the future of our organization and the development of your fellow team members.",
+                category: "workday",
+                tags: ["Mentorship", "Workday", "Development", "Networking"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/d/task/2998$47304.htmld",
+                keywords: ["mentorship", "mentor", "mentee", "development", "networking", "leadership"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["leadership", "communication", "core-values"],
+                learning: ["social", "mixed"]
+            },
+            {
+                id: 29,
+                title: "Enrich Your Career with Oshkosh",
+                description: "Watch this video overview of Career Hub and Mentoring Programs available through Workday. Learn how these tools can support your career development journey at Oshkosh.",
+                category: "workday",
+                tags: ["Workday", "Career Hub", "Mentorship", "Video"],
+                link: "./Enrich-your-career-with-Oshkosh-25mb.mp4",
+                keywords: ["workday", "career hub", "mentoring", "video", "enrich"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["leadership", "communication", "core-values"],
+                learning: ["self-paced", "social", "mixed"]
+            },
+
+            // LinkedIn Learning Resources
+            {
+                id: 30,
+                title: "LinkedIn Learning Info Session",
+                description: "Watch this video session covering the basics of accessing LinkedIn Learning, exploring available resources, and finding content that matches your development goals. Learn how to navigate the platform's 22,000+ expert-led courses, AI coaching, and career path exploration.",
+                category: "linkedin",
+                tags: ["LinkedIn Learning", "Video", "Getting Started", "Platform Guide"],
+                link: "./LinkedIn-Learning-Info-Session-25mb.mp4",
+                keywords: ["linkedin learning", "video", "tutorial", "access", "getting started"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 31,
+                title: "LinkedIn Learning Job Aid",
+                description: "Quick reference guide for using LinkedIn Learning. This job aid provides step-by-step instructions for accessing the platform, searching for courses, tracking your progress, and getting the most from your learning experience.",
+                category: "linkedin",
+                tags: ["LinkedIn Learning", "Job Aid", "Quick Reference", "Guide"],
+                link: "./LinkedIn-Learning-Job-Aid-.pdf",
+                keywords: ["linkedin learning", "job aid", "guide", "reference", "how to"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["technical", "leadership", "communication", "strategic"],
+                learning: ["self-paced", "mixed"]
+            },
+
+            // Assessment Tools
+            {
+                id: 33,
+                title: "DiSC Assessment",
+                description: "DiSC® is a personal assessment tool to help improve teamwork, communication, and productivity in the workplace. DiSC measures how you prefer to interact with others and creates a common language for better self-awareness. Takes only 10 minutes to complete. Request for yourself or your team through the HR Help Center in Workday.",
+                category: "assessments",
+                tags: ["Assessment", "DiSC", "Teamwork", "Communication", "HR Help Center"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/d/search.htmld?q=disc&state=searchCategory-Articles",
+                keywords: ["disc", "assessment", "personality", "teamwork", "communication", "hr help center"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic"],
+                skills: ["communication", "leadership"],
+                learning: ["self-paced", "social", "mixed"]
+            },
+            {
+                id: 34,
+                title: "360-Degree Assessment (Spidergap)",
+                description: "Spidergap is a development tool that provides insights on your performance from multiple viewpoints. Benefits include increasing self-awareness by identifying strengths and opportunities, minimizing source bias, and empowering you to take ownership of your development. Request through the HR Help Center. Note: If you have BetterUp or FranklinCovey access, you already have 360 assessment tools available.",
+                category: "assessments",
+                tags: ["Assessment", "360-Degree", "Feedback", "Development", "HR Help Center"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/25755$582/rel-task/2998$40834.htmld",
+                keywords: ["360", "assessment", "feedback", "spidergap", "development", "hr help center"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic"],
+                skills: ["leadership", "communication", "strategic"],
+                learning: ["self-paced", "social", "mixed"]
+            }
+        ];
+
+        // Quiz Logic
+        let quizAnswers = {};
+
+        // Add selection highlighting for quiz options
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+                const options = e.target.closest('.quiz-options').querySelectorAll('.quiz-option');
+                options.forEach(opt => {
+                    if (e.target.type === 'radio') {
+                        opt.classList.remove('selected');
+                    }
+                });
+                if (e.target.checked) {
+                    e.target.closest('.quiz-option').classList.add('selected');
+                } else {
+                    e.target.closest('.quiz-option').classList.remove('selected');
+                }
+            }
+        });
+
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Collect answers
+            const formData = new FormData(e.target);
+            quizAnswers = {
+                role: formData.get('role'),
+                aspiration: formData.get('aspiration'),
+                timeline: formData.get('timeline'),
+                skills: formData.getAll('skills'),
+                learning: formData.get('learning')
+            };
+
+            // Check if at least one skill is selected
+            if (quizAnswers.skills.length === 0) {
+                alert('Please select at least one skill area you want to develop.');
+                return;
+            }
+
+            // Generate recommendations
+            generateRecommendations();
+            showSection('results');
+        });
+
+        function generateRecommendations() {
+            const recommendations = [];
+
+            // Score each resource based on quiz answers
+            resources.forEach(resource => {
+                let score = 0;
+
+                // Match role
+                if (resource.roles.includes(quizAnswers.role)) {
+                    score += 2;
+                }
+
+                // Match aspiration
+                if (resource.aspirations.includes(quizAnswers.aspiration)) {
+                    score += 3;
+                }
+
+                // Match skills (high priority)
+                quizAnswers.skills.forEach(skill => {
+                    if (resource.skills.includes(skill)) {
+                        score += 4;
+                    }
+                });
+
+                // Match learning preference
+                if (resource.learning.includes(quizAnswers.learning)) {
+                    score += 1;
+                }
+
+                if (score > 0) {
+                    recommendations.push({ ...resource, score });
+                }
+            });
+
+            // Sort by score and take top recommendations
+            recommendations.sort((a, b) => b.score - a.score);
+            const topRecommendations = recommendations.slice(0, 8);
+
+            // Display results
+            displayRecommendations(topRecommendations);
+        }
+
+        function displayRecommendations(recommendations) {
+            const summaryDiv = document.getElementById('results-summary');
+            const resourcesDiv = document.getElementById('recommended-resources');
+
+            // Create summary
+            const aspirationText = {
+                'technical-expert': 'deepening your technical expertise',
+                'leadership': 'developing people leadership skills',
+                'strategic': 'building strategic leadership capabilities',
+                'lateral': 'exploring new areas'
+            };
+
+            summaryDiv.innerHTML = `
+                <h3>Based on your responses:</h3>
+                <p>You're focused on <strong>${aspirationText[quizAnswers.aspiration]}</strong> and want to develop skills in <strong>${quizAnswers.skills.map(s => s.replace('-', ' ')).join(', ')}</strong>.</p>
+                <p>Here are ${recommendations.length} resources recommended for you:</p>
+            `;
+
+            // Display recommended resources
+            resourcesDiv.innerHTML = recommendations.map(resource => {
+                let linkHtml = '';
+                if (resource.link === '#technical-skills-page') {
+                    linkHtml = `<a href="#" class="resource-link" onclick="showSection('technical-skills-page'); return false;">Learn More →</a>`;
+                } else if (resource.id === 7) {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Program Contact: Cristi Burrill for more information</span>`;
+                } else if (resource.link && resource.link !== '#') {
+                    linkHtml = `<a href="${resource.link}" class="resource-link" target="_blank">Access Resource →</a>`;
+                } else if (resource.id === 35) {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Program Contact: Cristi Burrill for more information</span>`;
+                } else {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Link coming soon</span>`;
+                }
+                const needsLinkBadge = (resource.id !== 7 && resource.link && resource.link.startsWith('./'))
+                    ? `<div class="needs-link-badge">⚠ Local File — Needs Permanent Link</div>`
+                    : '';
+                return `
+                <div class="resource-card">
+                    ${needsLinkBadge}
+                    <h3>${resource.title}</h3>
+                    <div class="resource-tags">
+                        ${resource.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <p>${resource.description}</p>
+                    ${linkHtml}
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Workday Learning Paths (for Technical Skills detail page)
+        const workdayLearningPaths = [
+            {
+                title: "Intermediate Technical Skills",
+                description: "Build on foundational technical knowledge with intermediate-level coursework.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28009/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Lunch and Learn - Engineering Topics",
+                description: "A variety of engineering-related topics in a quick, accessible format.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28008/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Safety Topics",
+                description: "Learning path covering key workplace safety topics.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$27996/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Beginner Technical Skills (Production)",
+                description: "Foundational technical skills geared toward production roles.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28007/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Continuous Improvement",
+                description: "Learning path focused on continuous improvement methods and practices.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28013/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Change Management",
+                description: "Develop skills to lead and support change within teams and the organization.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28006/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Communication Skills",
+                description: "Strengthen verbal, written, and interpersonal communication skills.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28005/rel-task/2998$36506.htmld"
+            }
+        ];
+
+        function displayWorkdayLearningPaths() {
+            const container = document.getElementById('workday-learning-paths');
+            if (!container) return;
+            container.innerHTML = workdayLearningPaths.map(path => `
+                <div class="resource-card">
+                    <h3>${path.title}</h3>
+                    <p>${path.description}</p>
+                    <a href="${path.link}" class="resource-link" target="_blank">Access Learning Path →</a>
+                </div>
+            `).join('');
+        }
+
+        // Library Functions
+        let currentFilter = 'all';
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+
+            if (sectionId === 'library') {
+                displayAllResources();
+            }
+
+            if (sectionId === 'technical-skills-page') {
+                displayWorkdayLearningPaths();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function displayAllResources(filterCategory = 'all', searchTerm = '') {
+            const resourceList = document.getElementById('resource-list');
+
+            let filtered = resources;
+
+            // If there's a search term, ignore category filter and search everything
+            if (searchTerm && searchTerm.trim() !== '') {
+                const search = searchTerm.toLowerCase().trim();
+
+                filtered = resources.filter(r => {
+                    // Search in title
+                    if (r.title && r.title.toLowerCase().includes(search)) {
+                        return true;
+                    }
+
+                    // Search in description
+                    if (r.description && r.description.toLowerCase().includes(search)) {
+                        return true;
+                    }
+
+                    // Search in keywords
+                    if (r.keywords && r.keywords.some(k => k.toLowerCase().includes(search))) {
+                        return true;
+                    }
+
+                    // Search in tags
+                    if (r.tags && r.tags.some(t => t.toLowerCase().includes(search))) {
+                        return true;
+                    }
+
+                    return false;
+                });
+            } else {
+                // No search term - apply category filter only
+                if (filterCategory !== 'all') {
+                    filtered = filtered.filter(r => r.category === filterCategory);
+                }
+            }
+
+            if (filtered.length === 0) {
+                resourceList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px;">No resources found matching your criteria.</p>';
+                return;
+            }
+
+            resourceList.innerHTML = filtered.map(resource => {
+                let linkHtml = '';
+                if (resource.link === '#technical-skills-page') {
+                    linkHtml = `<a href="#" class="resource-link" onclick="showSection('technical-skills-page'); return false;">Learn More →</a>`;
+                } else if (resource.id === 7) {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Program Contact: Cristi Burrill for more information</span>`;
+                } else if (resource.link && resource.link !== '#') {
+                    linkHtml = `<a href="${resource.link}" class="resource-link" target="_blank">Access Resource →</a>`;
+                } else if (resource.id === 35) {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Program Contact: Cristi Burrill for more information</span>`;
+                } else {
+                    linkHtml = `<span style="color: var(--text-muted); font-style: italic;">Link coming soon</span>`;
+                }
+                const needsLinkBadge = (resource.id !== 7 && resource.link && resource.link.startsWith('./'))
+                    ? `<div class="needs-link-badge">⚠ Local File — Needs Permanent Link</div>`
+                    : '';
+                return `
+                <div class="resource-card">
+                    ${needsLinkBadge}
+                    <h3>${resource.title}</h3>
+                    <div class="resource-tags">
+                        ${resource.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <p>${resource.description}</p>
+                    ${linkHtml}
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Filter buttons
+        const filterButtonsContainer = document.getElementById('filter-buttons');
+        if (filterButtonsContainer) {
+            filterButtonsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+
+                    const category = e.target.dataset.category;
+                    currentFilter = category;
+
+                    // Clear search box when clicking a category filter
+                    const searchBox = document.getElementById('search');
+                    if (searchBox) {
+                        searchBox.value = '';
+                    }
+
+                    displayAllResources(category, '');
+                }
+            });
+        }
+
+        // Search
+        const searchBox = document.getElementById('search');
+        if (searchBox) {
+            searchBox.addEventListener('input', function(e) {
+                displayAllResources(currentFilter, e.target.value);
+            });
+        }
+
+        // Initialize - display resources when page loads
+        displayAllResources();
+    </script>
+</body>
+</html>

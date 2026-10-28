@@ -822,6 +822,32 @@
                 skills: ["communication", "core-values", "strategic"],
                 learning: ["self-paced", "structured"]
             },
+            {
+                id: 43,
+                title: "Workday Learning Path: Personal Effectiveness & Wellbeing",
+                description: "Curated Workday learning path covering courses on personal effectiveness and wellbeing to support your overall growth and development.",
+                category: "planning",
+                tags: ["Career Planning", "Workday", "Wellbeing", "Personal Effectiveness"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28029/rel-task/2998$36506.htmld",
+                keywords: ["personal effectiveness", "wellbeing", "well-being", "workday learning path", "self improvement"],
+                roles: ["individual", "team-lead", "manager", "senior-leader"],
+                aspirations: ["technical-expert", "leadership", "strategic", "lateral"],
+                skills: ["strategic", "core-values"],
+                learning: ["self-paced", "mixed"]
+            },
+            {
+                id: 44,
+                title: "Workday Learning Path: Leadership",
+                description: "Curated Workday learning path covering leadership-focused courses to help you build and strengthen your leadership capabilities.",
+                category: "leadership",
+                tags: ["Leadership", "Workday", "Workday Learning Path"],
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28028/rel-task/2998$36506.htmld",
+                keywords: ["leadership", "workday learning path", "management", "lead"],
+                roles: ["team-lead", "manager", "senior-leader"],
+                aspirations: ["leadership", "strategic"],
+                skills: ["leadership", "strategic", "communication"],
+                learning: ["self-paced", "mixed"]
+            },
  
             // Career Planning & Tools
             {
@@ -1128,6 +1154,16 @@
                 title: "Communication Skills",
                 description: "Strengthen verbal, written, and interpersonal communication skills.",
                 link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28005/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Personal Effectiveness & Wellbeing",
+                description: "Learning path focused on personal effectiveness and wellbeing to support your overall growth.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28029/rel-task/2998$36506.htmld"
+            },
+            {
+                title: "Leadership",
+                description: "Learning path covering leadership-focused courses to build and strengthen leadership capabilities.",
+                link: "https://wd5.myworkday.com/oshkoshcorporation/email-universal/inst/23528$28028/rel-task/2998$36506.htmld"
             }
         ];
  
@@ -1145,6 +1181,30 @@
  
         // Library Functions
         let currentFilter = 'all';
+ 
+        // Maps each filter button's category key to the keyword to look for
+        // (case-insensitively) within a resource's tags, so a resource shows up
+        // under every filter its tags are relevant to -- not just its primary category.
+        const categoryTagKeywords = {
+            workday: 'workday',
+            linkedin: 'linkedin',
+            assessments: 'assessment',
+            values: 'values',
+            leadership: 'leadership',
+            technical: 'technical',
+            planning: 'planning'
+        };
+ 
+        function resourceMatchesCategory(resource, filterCategory) {
+            if (filterCategory === 'all') return true;
+            if (resource.category === filterCategory) return true;
+ 
+            const keyword = categoryTagKeywords[filterCategory];
+            if (keyword && resource.tags) {
+                return resource.tags.some(tag => tag.toLowerCase().includes(keyword));
+            }
+            return false;
+        }
  
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1203,9 +1263,10 @@
                     return false;
                 });
             } else {
-                // No search term - apply category filter only
+                // No search term - apply category filter, matching either the
+                // resource's primary category or a relevant tag
                 if (filterCategory !== 'all') {
-                    filtered = filtered.filter(r => r.category === filterCategory);
+                    filtered = filtered.filter(r => resourceMatchesCategory(r, filterCategory));
                 }
             }
  
